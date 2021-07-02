@@ -82,6 +82,7 @@ class MessagingConfig {
         print("onResume: $message");
         myBackgroundMessageHandler(message.data);
       });
+      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
   }
 

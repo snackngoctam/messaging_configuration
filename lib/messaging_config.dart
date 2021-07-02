@@ -110,7 +110,7 @@ class MessagingConfig {
 
   Future<dynamic> inAppMessageHandlerRemoteMessage(RemoteMessage message) async {
     showAlertNotificationForeground(
-        message.notification.title, message.notification.body, message.data);
+        message.notification.title ?? message.data['title'], message.notification.body ?? message.data['body'], message.data);
   }
   Future<dynamic> inAppMessageHandler(Map<String, dynamic> message) async {
     String notiTitle;
@@ -118,9 +118,12 @@ class MessagingConfig {
     if (message.containsKey("notification")) {
       notiTitle = message["notification"]["title"].toString();
       notiDes = message["notification"]["body"].toString();
-    } else {
+    } else  if(message.containsKey("aps")){
       notiTitle = message["aps"]["alert"]["title"].toString();
       notiDes = message["aps"]["alert"]["body"].toString();
+    }else{
+      notiTitle = message["data"]["title"].toString();
+      notiDes = message["data"]["body"].toString();
     }
     showAlertNotificationForeground(notiTitle, notiDes, Map<String, dynamic>.from(message["data"]));
   }

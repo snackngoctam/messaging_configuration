@@ -110,7 +110,7 @@ class MessagingConfig {
 
   Future<dynamic> inAppMessageHandlerRemoteMessage(RemoteMessage message) async {
     showAlertNotificationForeground(
-        message.notification.title ?? message.data['title'], message.notification.body ?? message.data['body'], message.data);
+        message.notification?.title ?? message.data['title'], message.notification?.body ?? message.data['body'], message.data);
   }
   Future<dynamic> inAppMessageHandler(Map<String, dynamic> message) async {
     String notiTitle;

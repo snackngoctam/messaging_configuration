@@ -109,18 +109,38 @@ class MessagingConfig {
   }
 
   Future<dynamic> inAppMessageHandlerRemoteMessage(RemoteMessage message) async {
+
+    if(message.notification == null){
+      print("notification is null");
+      print("=21=31=23=123=12==================");
+      print(message.notification?.title ?? message.data['title']);
+      print(message.notification?.body ?? message.data['body'] ?? message.data['message']);
+
+    }else{
+      print("notification is not null");
+      print(message.notification);
+    }
+
     showAlertNotificationForeground(
-        message.notification?.title ?? message.data['title'], message.notification?.body ?? message.data['body'], message.data);
+        message.notification?.title ?? message.data['title'], message.notification?.body ?? message.data['body'] ?? message.data['message'], message.data);
   }
   Future<dynamic> inAppMessageHandler(Map<String, dynamic> message) async {
     String notiTitle;
     String notiDes;
     if (message.containsKey("notification")) {
       notiTitle = message["notification"]["title"].toString();
-      notiDes = message["notification"]["body"].toString();
+      if(message["notification"].containsKey("body")){
+        notiDes = message["notification"]["body"].toString();
+      }else{
+        notiDes = message["notification"]["message"].toString();
+      }
     } else  if(message.containsKey("aps")){
       notiTitle = message["aps"]["alert"]["title"].toString();
-      notiDes = message["aps"]["alert"]["body"].toString();
+      if(message["aps"]["alert"].containsKey("body")){
+        notiDes = message["aps"]["alert"]["body"].toString();
+      }else{
+        notiDes = message["aps"]["alert"]["message"].toString();
+      }
     }else{
       notiTitle = message["data"]["title"].toString();
       notiDes = message["data"]["body"].toString();

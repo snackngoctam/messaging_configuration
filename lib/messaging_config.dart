@@ -82,7 +82,6 @@ class MessagingConfig {
         print("onResume: $message");
         myBackgroundMessageHandler(message.data);
       });
-      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
   }
 
@@ -110,18 +109,6 @@ class MessagingConfig {
   }
 
   Future<dynamic> inAppMessageHandlerRemoteMessage(RemoteMessage message) async {
-
-    if(message.notification == null){
-      print("notification is null");
-      print("=21=31=23=123=12==================");
-      print(message.notification?.title ?? message.data['title']);
-      print(message.notification?.body ?? message.data['body'] ?? message.data['message']);
-
-    }else{
-      print("notification is not null");
-      print(message.notification);
-    }
-
     showAlertNotificationForeground(
         message.notification?.title ?? message.data['title'], message.notification?.body ?? message.data['body'] ?? message.data['message'], message.data);
   }
@@ -144,7 +131,11 @@ class MessagingConfig {
       }
     }else{
       notiTitle = message["data"]["title"].toString();
-      notiDes = message["data"]["body"].toString();
+      if(message["data"].containsKey("body")){
+        notiDes = message["data"]["body"].toString();
+      }else{
+        notiDes = message["data"]["message"].toString();
+      }
     }
     showAlertNotificationForeground(notiTitle, notiDes, Map<String, dynamic>.from(message["data"]));
   }

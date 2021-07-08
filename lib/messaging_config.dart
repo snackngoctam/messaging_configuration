@@ -70,7 +70,11 @@ class MessagingConfig {
         print("onMessage: $message");
         print("=========================================================");
         print("=========================================================");
-        print(json.encode(message.data));
+        if(message.data != null){
+          print(json.encode(message.data));
+          print(message.data["model"]);
+          print(json.encode(message.data["model"]));
+        }
         inAppMessageHandlerRemoteMessage(message);
       });
       // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {
@@ -81,14 +85,22 @@ class MessagingConfig {
         print("getInitialMessage: $message");
         print("=========================================================");
         print("=========================================================");
-        print(json.encode(message.data));
+        if(message.data != null){
+          print(json.encode(message.data));
+          print(message.data["model"]);
+          print(json.encode(message.data["model"]));
+        }
         if(message != null) myBackgroundMessageHandler(message.data);
       });
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         print("onResume: $message");
         print("=========================================================");
         print("=========================================================");
-        print(json.encode(message.data));
+        if(message.data != null){
+          print(json.encode(message.data));
+          print(message.data["model"]);
+          print(json.encode(message.data["model"]));
+        }
         myBackgroundMessageHandler(message.data);
       });
     }

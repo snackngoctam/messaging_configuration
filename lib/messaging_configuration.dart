@@ -50,6 +50,12 @@ class MessagingConfiguration {
             : null);
   }
 
+  static void showNotificationDefault(
+      String notiTitle, String notiDes, Map<String, dynamic> message) {
+    MessagingConfig.singleton
+        .showNotificationDefault(notiTitle, notiDes, message);
+  }
+
   static const iOSPushToken = const MethodChannel('flutter.io/awsMessaging');
   static Future<String> getPushToken({bool isAWS = false}) async {
     String deviceToken = "";

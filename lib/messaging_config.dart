@@ -152,7 +152,8 @@ class MessagingConfig {
   }
 
   void showNotificationDefault(
-      String notiTitle, String notiDes, Map<String, dynamic> message) {
+      String notiTitle, String notiDes, Map<String, dynamic> message,
+      {Function omCB}) {
     if (notiTitle != null && notiDes != null) {
       showOverlayNotification((context) {
         return BannerNotification(
@@ -162,6 +163,10 @@ class MessagingConfig {
           onReplay: () {
             if (onMessageCallback != null) {
               onMessageCallback(message);
+            } else {
+              if (omCB != null) {
+                omCB(message);
+              }
             }
             OverlaySupportEntry.of(context).dismiss();
           },

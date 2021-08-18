@@ -151,6 +151,43 @@ class MessagingConfig {
     }
   }
 
+  void showNotificationDefault(
+      String notiTitle, String notiDes, Map<String, dynamic> message) {
+    if (notiTitle != null && notiDes != null) {
+      showOverlayNotification((context) {
+        return BannerNotification(
+          notiTitle: notiTitle,
+          notiDescription: notiDes,
+          iconApp: iconApp,
+          onReplay: () {
+            if (onMessageCallback != null) {
+              onMessageCallback(message);
+            }
+            OverlaySupportEntry.of(context).dismiss();
+          },
+        );
+      }, duration: Duration(seconds: 5));
+
+      try {
+        if (isVibrate) {
+          _vibrate.invokeMethod('vibrate');
+        }
+        if (Platform.isIOS) {
+          if (sound != null) {
+            AudioCache player = AudioCache();
+            player.play(sound["asset"]);
+          }
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    if (notificationInForeground != null) {
+      notificationInForeground();
+    }
+  }
+
   void showAlertNotificationForeground(
       String notiTitle, String notiDes, Map<String, dynamic> message) {
     if (isCustomForegroundNotification) {
@@ -158,39 +195,7 @@ class MessagingConfig {
         onMessageCallback(message);
       }
     } else {
-      if (notiTitle != null && notiDes != null) {
-        showOverlayNotification((context) {
-          return BannerNotification(
-            notiTitle: notiTitle,
-            notiDescription: notiDes,
-            iconApp: iconApp,
-            onReplay: () {
-              if (onMessageCallback != null) {
-                onMessageCallback(message);
-              }
-              OverlaySupportEntry.of(context).dismiss();
-            },
-          );
-        }, duration: Duration(seconds: 5));
-
-        try {
-          if (isVibrate) {
-            _vibrate.invokeMethod('vibrate');
-          }
-          if (Platform.isIOS) {
-            if (sound != null) {
-              AudioCache player = AudioCache();
-              player.play(sound["asset"]);
-            }
-          }
-        } catch (e) {
-          print(e);
-        }
-      }
-
-      if (notificationInForeground != null) {
-        notificationInForeground();
-      }
+      showNotificationDefault(notiTitle, notiDes, message);
     }
   }
 

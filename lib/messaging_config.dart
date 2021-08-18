@@ -32,6 +32,7 @@ class MessagingConfig {
 
   Function(Map<String, dynamic>) onMessageCallback;
   Function(Map<String, dynamic>) onMessageBackgroundCallback;
+  bool isCustomForegroundNotification = false;
   Function notificationInForeground;
   String iconApp;
   bool isVibrate;
@@ -44,6 +45,7 @@ class MessagingConfig {
   init(BuildContext context, Function(Map<String, dynamic>) onMessageCallback,
       Function(Map<String, dynamic>) onMessageBackgroundCallback,
       {bool isAWSNotification = true,
+      bool isCustomForegroundNotification = false,
       String iconApp,
       Function notificationInForeground,
       bool isVibrate = false,
@@ -54,6 +56,7 @@ class MessagingConfig {
     this.onMessageBackgroundCallback = onMessageBackgroundCallback;
     this.notificationInForeground = notificationInForeground;
     this.isVibrate = isVibrate;
+    this.isCustomForegroundNotification = isCustomForegroundNotification;
     this.sound = sound;
     if (sound != null) {
       if (Platform.isAndroid) {
@@ -150,38 +153,44 @@ class MessagingConfig {
 
   void showAlertNotificationForeground(
       String notiTitle, String notiDes, Map<String, dynamic> message) {
-    if (notiTitle != null && notiDes != null) {
-      showOverlayNotification((context) {
-        return BannerNotification(
-          notiTitle: notiTitle,
-          notiDescription: notiDes,
-          iconApp: iconApp,
-          onReplay: () {
-            if (onMessageCallback != null) {
-              onMessageCallback(message);
-            }
-            OverlaySupportEntry.of(context).dismiss();
-          },
-        );
-      }, duration: Duration(seconds: 5));
-
-      try {
-        if (isVibrate) {
-          _vibrate.invokeMethod('vibrate');
-        }
-        if (Platform.isIOS) {
-          if (sound != null) {
-            AudioCache player = AudioCache();
-            player.play(sound["asset"]);
-          }
-        }
-      } catch (e) {
-        print(e);
+    if (isCustomForegroundNotification) {
+      if (onMessageCallback != null) {
+        onMessageCallback(message);
       }
-    }
+    } else {
+      if (notiTitle != null && notiDes != null) {
+        showOverlayNotification((context) {
+          return BannerNotification(
+            notiTitle: notiTitle,
+            notiDescription: notiDes,
+            iconApp: iconApp,
+            onReplay: () {
+              if (onMessageCallback != null) {
+                onMessageCallback(message);
+              }
+              OverlaySupportEntry.of(context).dismiss();
+            },
+          );
+        }, duration: Duration(seconds: 5));
 
-    if (notificationInForeground != null) {
-      notificationInForeground();
+        try {
+          if (isVibrate) {
+            _vibrate.invokeMethod('vibrate');
+          }
+          if (Platform.isIOS) {
+            if (sound != null) {
+              AudioCache player = AudioCache();
+              player.play(sound["asset"]);
+            }
+          }
+        } catch (e) {
+          print(e);
+        }
+      }
+
+      if (notificationInForeground != null) {
+        notificationInForeground();
+      }
     }
   }
 

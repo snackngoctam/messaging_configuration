@@ -161,13 +161,7 @@ class MessagingConfig {
           notiDescription: notiDes,
           iconApp: iconApp,
           onReplay: () {
-            if (onMessageCallback != null) {
-              onMessageCallback(message);
-            } else {
-              if (omCB != null) {
-                omCB(message);
-              }
-            }
+            omCB();
             OverlaySupportEntry.of(context).dismiss();
           },
         );
@@ -233,7 +227,6 @@ class BannerNotificationState extends State<BannerNotification> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('aaaaa');
   }
 
   @override

@@ -233,6 +233,7 @@ class BannerNotificationState extends State<BannerNotification> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('aaaaa');
   }
 
   @override

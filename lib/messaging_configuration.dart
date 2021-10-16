@@ -50,13 +50,6 @@ class MessagingConfiguration {
             : null);
   }
 
-  static void showNotificationDefault(String notiTitle, String notiDes,
-      Map<String, dynamic> message, Function onMessageCallback) {
-    MessagingConfig.singleton.showNotificationDefault(
-        notiTitle, notiDes, message,
-        omCB: onMessageCallback);
-  }
-
   static const iOSPushToken = const MethodChannel('flutter.io/awsMessaging');
   static Future<String> getPushToken({bool isAWS = false}) async {
     String deviceToken = "";

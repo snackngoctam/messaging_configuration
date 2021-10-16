@@ -194,7 +194,7 @@ class MessagingConfig {
         onMessageCallback(message);
       }
     } else {
-      showNotificationDefault(notiTitle, notiDes, message);
+      showNotificationDefault(notiTitle, notiDes, message, omCB: () => onMessageCallback(message));
     }
   }
 

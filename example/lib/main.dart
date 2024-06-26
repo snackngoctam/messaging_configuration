@@ -22,28 +22,20 @@ class _MyAppState extends State<MyApp> {
       MessagingConfiguration.setUpMessagingConfiguration(context,
           onMessageCallback: onMessageCallback,
           notificationInForeground: _notificationInForeground,
-          onMessageBackground: onMessageBackground,
-          onMessageBackgroundCallback: onMessageBackgroundCallback,
           isAWSNotification: false,
           iconApp: "assets/logo/icon-app.png",
           isVibrate: true,
           sound: "audio/alert_tone.mp3",
           channelId: 105);
       MessagingConfiguration.getPushToken().then((value) {
-        Clipboard.setData(new ClipboardData(text: value??"")).then((_) {
+        Clipboard.setData(new ClipboardData(text: value)).then((_) {
           print(value);
         });
       });
     });
   }
 
-  onMessageBackground(Map<String, dynamic>? message) {
-  }
-
-  onMessageBackgroundCallback(Map<String, dynamic>? message) {
-  }
-
-  onMessageCallback(Map<String, dynamic>? message) {
+  onMessageCallback(Map<String, dynamic> message) {
     print(message);
   }
 

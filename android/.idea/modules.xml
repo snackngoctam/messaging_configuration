@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/messaging_configuration.iml" filepath="$PROJECT_DIR$/.idea/modules/messaging_configuration.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/messaging_configuration.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/messaging_configuration.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/messaging_configuration.main.iml" filepath="$PROJECT_DIR$/.idea/modules/messaging_configuration.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/messaging_configuration.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/messaging_configuration.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messaging_configuration.iml" filepath="$PROJECT_DIR$/messaging_configuration.iml" />
     </modules>
   </component>
 </project>

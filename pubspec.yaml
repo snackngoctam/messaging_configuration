@@ -13,7 +13,6 @@ dependencies:
   firebase_messaging: ^14.1.2
   overlay_support: ^2.1.0
   audioplayers: ^4.1.0
-  flutter_mute: ^0.0.4
   firebase_core: ^2.1.1
 
 dev_dependencies:

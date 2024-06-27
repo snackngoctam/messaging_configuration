@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     print(message);
   }
 
-  _notificationInForeground() {
+  _notificationInForeground(Map<String, dynamic>? message) {
     print("_notificationInForeground");
   }
 

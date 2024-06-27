@@ -28,7 +28,7 @@ class MessagingConfiguration {
       bool isAWSNotification = true,
       String? iconApp,
       bool isCustomForegroundNotification = false,
-      Function? notificationInForeground,
+      Function(Map<String, dynamic>?)? notificationInForeground,
       bool? isVibrate,
       String? sound,
       int? channelId}) async {
@@ -67,8 +67,7 @@ class MessagingConfiguration {
     if (!kIsWeb) {
       if (defaultTargetPlatform == TargetPlatform.iOS && isAWS) {
         try {
-          deviceToken =
-              await (iOSPushToken.invokeMethod('getToken'));
+          deviceToken = await (iOSPushToken.invokeMethod('getToken'));
         } on PlatformException {
           print("Error receivePushNotificationToken");
           deviceToken = "";

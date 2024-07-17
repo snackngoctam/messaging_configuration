@@ -65,7 +65,7 @@ class MessagingConfiguration {
     if (!kIsWeb) {
       if (defaultTargetPlatform == TargetPlatform.iOS && isAWS) {
         try {
-          deviceToken = await (iOSPushToken.invokeMethod('getToken') as FutureOr<String>);
+          deviceToken = (await iOSPushToken.invokeMethod('getToken')).toString();
         } on PlatformException {
           print("Error receivePushNotificationToken");
           deviceToken = "";
@@ -84,7 +84,7 @@ class MessagingConfiguration {
         deviceToken = (await FirebaseMessaging.instance.getToken())!;
       }
     }
-    return deviceToken;
+    return deviceToken.toString();
   }
   static Future<bool> requestPermission() async {
     bool status = false;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -199,15 +198,6 @@ class MessagingConfig {
         try {
           if (isVibrate!) {
             _vibrate.invokeMethod('vibrate');
-          }
-          if (defaultTargetPlatform == TargetPlatform.iOS) {
-            if (sound != null) {
-              RingerMode ringerMode = await FlutterMute.getRingerMode();
-              if(ringerMode == RingerMode.Normal) {
-                AudioCache player = AudioCache();
-                player.play(sound!["asset"]);
-              }
-            }
           }
         } catch (e) {
           print(e);

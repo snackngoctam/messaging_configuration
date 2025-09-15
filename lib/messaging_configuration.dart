@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,14 +30,7 @@ class MessagingConfiguration {
       String? sound,
       int? channelId}) async {
     String? asset;
-    if (sound != null) {
-      AudioCache player = AudioCache();
-      if (defaultTargetPlatform == TargetPlatform.iOS) {
-        asset = sound;
-      } else {
-        asset = await getAbsoluteUrl(sound, player);
-      }
-    }
+
     MessagingConfig.singleton.init(
         context, onMessageCallback, onMessageBackgroundCallback,
         iconApp: iconApp,
@@ -113,13 +104,5 @@ class MessagingConfiguration {
 
 
 
-  static Future<String> getAbsoluteUrl(
-      String fileName, AudioCache cache) async {
-    String prefix = 'assets/';
-    if (kIsWeb) {
-      return 'assets/$prefix$fileName';
-    }
-    Uri file = await cache.load(fileName);
-    return file.path;
-  }
+
 }
